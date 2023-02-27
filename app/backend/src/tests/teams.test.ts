@@ -12,12 +12,12 @@ const { expect } = chai;
 describe('Tests Teams', () => {
     beforeEach(sinon.restore);
 
-  it('FindAll', async () => {
+  it('findAll', async () => {
    const result = await chai.request(app).get('/teams').send();
    expect(result.status).to.be.equal(200);
   });
 
-  it('FindByID', async () => {
+  it('findByID', async () => {
     const result = await chai.request(app).get('/teams/1').send();
     expect(result.status).to.be.equal(200);
    });
