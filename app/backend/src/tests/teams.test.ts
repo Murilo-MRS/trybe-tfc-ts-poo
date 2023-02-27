@@ -1,10 +1,10 @@
-import Sinon, * as sinon from 'sinon';
+import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { Model } from 'sequelize';
-import { app } from '../../app';
-import { allTeams } from './mocks/teams.mock';
+import { app } from '../app';
+import { allTeams } from './teams.mock';
 
 chai.use(chaiHttp);
 
@@ -15,7 +15,7 @@ describe('Tests Teams', () => {
       sinon.restore();
     });
 
-  it('findAll retorna com sucesso', async () => {
+  it('findAll retorna com sucesso', async function () {
     // Arrange
     sinon.stub(Model, 'findAll').resolves(allTeams);
     // Act
@@ -24,7 +24,7 @@ describe('Tests Teams', () => {
     expect(result.status).to.be.equal(200);
   });
   
-  it('findOne retorna com sucesso', async () => {
+  it('findOne retorna com sucesso', async function () {
     // Arrange
     sinon.stub(Model, 'findOne').resolves(allTeams[0]);
     // Act

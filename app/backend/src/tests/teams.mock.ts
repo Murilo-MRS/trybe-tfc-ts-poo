@@ -1,4 +1,4 @@
-import Team from '../../../database/models/TeamModel';
+import Team from '../database/models/TeamModel';
 
 export const allTeams : Team[] = [
   new Team({
