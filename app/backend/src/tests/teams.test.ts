@@ -5,12 +5,14 @@ import chaiHttp = require('chai-http');
 import { Model } from 'sequelize';
 import { app } from '../app';
 import { allTeams } from './teams.mock';
+import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
 describe('Tests Teams', () => {
+  let chaiHttpResponse: Response;
     afterEach(() => {
       sinon.restore();
     });
