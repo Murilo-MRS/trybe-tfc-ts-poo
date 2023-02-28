@@ -1,4 +1,6 @@
 import * as express from 'express';
+import 'express-async-errors';
+import handleGlobalError from './middlewares/handleGlobalError';
 import routes from './routes/index.routes';
 
 class App {
@@ -12,6 +14,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.initRoutes();
+    this.initializeErrorHandling();
   }
 
   private config():void {
@@ -28,6 +31,10 @@ class App {
 
   private initRoutes(): void {
     this.app.use(routes);
+  }
+
+  private initializeErrorHandling() {
+    this.app.use(handleGlobalError);
   }
 
   public start(PORT: string | number):void {
