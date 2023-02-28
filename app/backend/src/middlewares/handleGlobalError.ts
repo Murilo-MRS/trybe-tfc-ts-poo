@@ -9,12 +9,14 @@ function handleGlobalError(
 ) {
   const status = error.status || 500;
   const message = error.message || 'Something went wrong';
-  response
-    .status(status)
-    .send({
-      status,
-      message,
-    });
+
+  if (error instanceof AppError) {
+    return response
+      .status(status)
+      .json({
+        message,
+      });
+  }
 }
 
 export default handleGlobalError;
