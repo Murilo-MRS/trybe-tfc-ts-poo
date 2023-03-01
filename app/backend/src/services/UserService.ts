@@ -23,7 +23,9 @@ class UserService implements IUserService {
     if (!validatePassword) throw new AppError(401, 'Invalid email or password');
 
     const { dataValues } = user;
-    const token = generateToken(dataValues);
+    const token = generateToken({
+      username: dataValues.username, role: dataValues.role, email: dataValues.email,
+    });
 
     return { status: 200, token };
   }
