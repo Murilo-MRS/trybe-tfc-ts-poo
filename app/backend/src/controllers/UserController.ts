@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
-import IUserService from '../interfaces/IUserService';
+import UserService from '../services/UserService';
 
 class UserController {
-  private _service: IUserService;
+  private _service: UserService;
 
-  constructor(service: IUserService) {
+  constructor(service: UserService) {
     this._service = service;
   }
 
   public async login(req: Request, res: Response) {
-    const { status, message } = await this._service.login(req.body);
-    return res.status(status).json({ message });
+    const { status, token } = await this._service.login(req.body);
+    return res.status(status).json({ token });
   }
 }
 

@@ -1,9 +1,9 @@
-import * as jwt from 'jsonwebtoken';
+import { verify } from 'jsonwebtoken';
 
 const secret = process.env.JWT_SECRET as string;
 
 const authenticateToken = (token: string) => {
-  const verificationResponse = jwt.verify(token, secret);
+  const verificationResponse = verify(token, secret);
   return verificationResponse;
 };
 
