@@ -15,6 +15,14 @@ class MatchController {
 
     return res.status(status).json(message);
   }
+
+  public async finishMatch(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const { status, message } = await this._service.updateMatchProgress(+id);
+
+    return res.status(status).json({ message });
+  }
 }
 
 export default MatchController;
