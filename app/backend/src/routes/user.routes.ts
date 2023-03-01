@@ -20,7 +20,7 @@ routes.post(
 routes.get(
   '/role',
   auth.tokenValidation,
-  (req: Request, res: Response) => userController.login(req, res),
+  (req: Request, res: Response) => userController.role(req, res),
 );
 
 export default routes;

@@ -6,7 +6,7 @@ import authenticateToken from '../utils/jwt/authenticateToken';
 export default class Auth {
   public tokenValidation = async (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction,
   ) => {
     const { authorization } = req.headers;
@@ -14,9 +14,7 @@ export default class Auth {
     if (!authorization) throw new AppError(401, 'Token not found');
 
     try {
-      const user = authenticateToken(authorization);
-
-      res.locals.user = user;
+      authenticateToken(authorization);
 
       next();
     } catch (error) {

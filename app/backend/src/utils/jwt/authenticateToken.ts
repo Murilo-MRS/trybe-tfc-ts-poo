@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken';
 
-const secret = process.env.JWT_SECRET as string;
+const secret = process.env.JWT_SECRET as string || 'jwt_secret';
 
 const authenticateToken = (token: string) => {
   const verificationResponse = verify(token, secret);
