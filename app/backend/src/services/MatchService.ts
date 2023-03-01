@@ -43,7 +43,7 @@ class MatchService implements IMatchService {
   public async updateInProgressMatch(
     id: number,
     { homeTeamGoals, awayTeamGoals }: IBodyMatchGoals,
-  ) {
+  ): Promise<IResponseMessage<string> > {
     await this.model.update(
       { homeTeamGoals, awayTeamGoals },
       { where: { id } },
