@@ -1,6 +1,6 @@
 import * as express from 'express';
 import 'express-async-errors';
-import handleGlobalError from './middlewares/handleGlobalError';
+import HandleGlobalError from './middlewares/HandleGlobalError';
 import routes from './routes/index.routes';
 
 class App {
@@ -34,7 +34,7 @@ class App {
   }
 
   private initializeErrorHandling() {
-    this.app.use(handleGlobalError);
+    this.app.use(HandleGlobalError.handleError);
   }
 
   public start(PORT: string | number):void {
