@@ -29,7 +29,7 @@ class MatchService implements IMatchService {
     return { status: 200, message: matches };
   }
 
-  public async updateMatchProgress(id: number): Promise<IResponseMessage<string> > {
+  public async finishMatch(id: number): Promise<IResponseMessage<string> > {
     await this.model.update({ inProgress: false }, {
       where: {
         id,

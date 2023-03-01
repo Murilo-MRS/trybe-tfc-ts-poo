@@ -19,7 +19,7 @@ class MatchController {
   public async finishMatch(req: Request, res: Response) {
     const { id } = req.params;
 
-    const { status, message } = await this._service.updateMatchProgress(+id);
+    const { status, message } = await this._service.finishMatch(+id);
 
     return res.status(status).json({ message });
   }
