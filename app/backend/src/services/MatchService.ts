@@ -51,6 +51,11 @@ class MatchService implements IMatchService {
 
     return { status: 200, message: 'Goals Updated!' };
   }
+
+  public async createMatch(body: IMatch): Promise<IResponseMessage<IMatch> > {
+    const newMatch = await this.model.create({ ...body, inProgress: true });
+    return { status: 200, message: newMatch };
+  }
 }
 
 export default MatchService;

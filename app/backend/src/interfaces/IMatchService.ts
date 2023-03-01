@@ -9,5 +9,5 @@ export default interface IMatchService {
     id: number,
     body: IBodyMatchGoals,
   ): Promise<IResponseMessage<string> >;
-  createMatch(body:IMatch): Promise<IMatch>;
+  createMatch(body:IMatch): Promise<IResponseMessage<IMatch> >;
 }

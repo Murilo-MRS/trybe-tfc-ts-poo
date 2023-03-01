@@ -14,6 +14,12 @@ routes.get(
   (req: Request, res: Response) => matchController.getAllMatches(req, res),
 );
 
+routes.post(
+  '/',
+  auth.tokenValidation,
+  (req: Request, res: Response) => matchController.createMatch(req, res),
+);
+
 routes.patch(
   '/:id/finish',
   auth.tokenValidation,
@@ -24,12 +30,6 @@ routes.patch(
   '/:id',
   auth.tokenValidation,
   (req: Request, res: Response) => matchController.updateInProgressMatch(req, res),
-);
-
-routes.post(
-  '/',
-  auth.tokenValidation,
-  (req: Request, res: Response) => matchController.createMatch(req, res),
 );
 
 export default routes;
