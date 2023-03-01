@@ -4,6 +4,7 @@ import Match from '../database/models/MatchModel';
 import IMatch from '../interfaces/IMatch';
 import IResponseMessage from '../interfaces/IResponseMessage';
 import Team from '../database/models/TeamModel';
+import IBodyMatchGoals from '../interfaces/IBodyMatchGoals';
 // import Team from '../database/models/TeamModel';
 
 class MatchService implements IMatchService {
@@ -37,6 +38,18 @@ class MatchService implements IMatchService {
     });
 
     return { status: 200, message: 'Finished' };
+  }
+
+  public async updateInProgressMatch(
+    id: number,
+    { homeTeamGoals, awayTeamGoals }: IBodyMatchGoals,
+  ) {
+    await this.model.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+
+    return { status: 200, message: 'Goals Updated!' };
   }
 }
 
