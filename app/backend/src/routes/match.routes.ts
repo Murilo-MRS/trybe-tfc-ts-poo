@@ -9,7 +9,7 @@ const matchController = new MatchController(matchService);
 
 routes.get(
   '/',
-  (req: Request, res: Response) => matchController.getAllMathches(req, res),
+  (req: Request, res: Response) => matchController.getAllMatches(req, res),
 );
 // routes.get('/:id', (req: Request, res: Response) => matchController.getTeamById(req, res));
 
