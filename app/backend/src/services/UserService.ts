@@ -10,16 +10,17 @@ import AppError from '../errors/AppError';
 class UserService implements IUserService {
   private model: ModelStatic<User> = User;
 
-  public async login(userBody: IUser): Promise<IResponse<string>> {
+  public async login(userBody: IUser): Promise<IResponse<string> > {
     const user = await this.model.findOne({
       where: { email: userBody.email },
     });
     if (!user) throw new AppError(401, 'Invalid email or password');
 
-    const validatePassword = await bcrypt.compare(userBody.password, user.password);
+    const validatePassword = bcrypt.compare(userBody.password, user?.password);
     if (!validatePassword) throw new AppError(401, 'Invalid email or password');
 
-    const token = generateToken(user);
+    const { dataValues } = user;
+    const token = generateToken(dataValues);
 
     return { status: 200, message: token };
   }
