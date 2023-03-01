@@ -11,6 +11,7 @@ routes.get(
   '/',
   (req: Request, res: Response) => matchController.getAllMatches(req, res),
 );
-// routes.get('/:id', (req: Request, res: Response) => matchController.getTeamById(req, res));
+
+routes.patch('/:id/finish', (req: Request, res: Response) => matchController.finishMatch(req, res));
 
 export default routes;
