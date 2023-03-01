@@ -5,7 +5,7 @@ import LoginBodySchema from './validations/schemas';
 export default class ValidLogin {
   public validate = async (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction,
   ) => {
     const { error } = LoginBodySchema.validate(req.body);
