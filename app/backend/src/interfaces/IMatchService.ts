@@ -8,5 +8,6 @@ export default interface IMatchService {
   updateInProgressMatch(
     id: number,
     body: IBodyMatchGoals,
-  ): Promise<IResponseMessage<string> >
+  ): Promise<IResponseMessage<string> >;
+  createMatch(body:IMatch): Promise<IMatch>;
 }

@@ -26,10 +26,10 @@ routes.patch(
   (req: Request, res: Response) => matchController.updateInProgressMatch(req, res),
 );
 
-// routes.post(
-//   '/',
-//   auth.tokenValidation,
-//   (req: Request, res: Response) => matchController.createMatch(req, res),
-// );
+routes.post(
+  '/',
+  auth.tokenValidation,
+  (req: Request, res: Response) => matchController.createMatch(req, res),
+);
 
 export default routes;
