@@ -1,4 +1,5 @@
 import { ModelStatic, Op } from 'sequelize';
+import AppError from '../errors/AppError';
 import IMatchService from '../interfaces/IMatchService';
 import Match from '../database/models/MatchModel';
 import IMatch from '../interfaces/IMatch';
@@ -9,6 +10,7 @@ import IBodyMatchGoals from '../interfaces/IBodyMatchGoals';
 
 class MatchService implements IMatchService {
   private model: ModelStatic<Match> = Match;
+  private teamModel: ModelStatic<Team> = Team;
 
   public async findAll(query?: string): Promise<IResponseMessage<IMatch[]> > {
     if (query === undefined) {
@@ -53,6 +55,15 @@ class MatchService implements IMatchService {
   }
 
   public async createMatch(body: IMatch): Promise<IResponseMessage<IMatch> > {
+    const teamOne = await this.teamModel.findByPk(body.homeTeamId);
+    const teamTwo = await this.teamModel.findByPk(body.awayTeamId);
+
+    if (!teamOne || !teamTwo) throw new AppError(404, 'There is no team with such id!');
+
+    if (body.homeTeamId === body.awayTeamId) {
+      throw new AppError(422, 'It is not possible to create a match with two equal teams');
+    }
+
     const newMatch = await this.model.create({ ...body, inProgress: true });
     return { status: 201, message: newMatch };
   }

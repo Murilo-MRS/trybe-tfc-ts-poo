@@ -34,7 +34,6 @@ class MatchController {
 
   public async createMatch(req: Request, res: Response) {
     const { status, message } = await this._service.createMatch(req.body);
-    console.log(req.body);
 
     return res.status(status).json(message);
   }
