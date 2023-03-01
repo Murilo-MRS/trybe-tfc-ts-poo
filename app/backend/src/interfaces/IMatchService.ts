@@ -1,5 +1,6 @@
 import IMatch from './IMatch';
+import IResponseMessage from './IResponseMessage';
 
 export default interface IMatchService {
-  findAll(): Promise<IMatch[]>;
+  findAll(query?: string): Promise<IResponseMessage<IMatch[]> >;
 }
