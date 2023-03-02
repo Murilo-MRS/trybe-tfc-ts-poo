@@ -55,12 +55,13 @@ class MatchService implements IMatchService {
   }
 
   public async createMatch(body: IMatch): Promise<IResponseMessage<IMatch> > {
-    const teamOne = await this.teamModel.findByPk(body.homeTeamId);
-    const teamTwo = await this.teamModel.findByPk(body.awayTeamId);
+    const { homeTeamId, awayTeamId } = body;
+    const teamOne = await this.teamModel.findByPk(homeTeamId);
+    const teamTwo = await this.teamModel.findByPk(awayTeamId);
 
     if (!teamOne || !teamTwo) throw new AppError(404, 'There is no team with such id!');
 
-    if (body.homeTeamId === body.awayTeamId) {
+    if (homeTeamId === awayTeamId) {
       throw new AppError(422, 'It is not possible to create a match with two equal teams');
     }
 
