@@ -41,7 +41,12 @@ class LeaderBoardService implements ILeaderBoardService {
 
     const calculate = new Calculators(board, finishedMatches);
     const result = calculate.calculateHomeResults();
-    const orderedBoard = result.sort((a, b) => b.totalPoints - a.totalPoints);
+    const orderedBoard = result.sort(
+      (a, b) => b.totalPoints - a.totalPoints
+      || a.goalsBalance - b.goalsBalance
+      || b.goalsFavor - a.goalsFavor
+      || b.goalsOwn - a.goalsOwn,
+    );
 
     return { status: 200, message: orderedBoard };
   }

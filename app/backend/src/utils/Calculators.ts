@@ -22,7 +22,7 @@ class Calculators {
       } else if (data.homeTeamGoals === data.awayTeamGoals) {
         homeTeam.totalDraws += 1;
       } else { homeTeam.totalVictories += 1; }
-      const { pts, eff, goalsDiff } = Calculators.calcBoard(homeTeam as ILeaderBoard);
+      const { pts, eff, goalsDiff } = Calculators.calcBoard(homeTeam);
 
       homeTeam.totalPoints = pts;
       homeTeam.totalGames += 1;
