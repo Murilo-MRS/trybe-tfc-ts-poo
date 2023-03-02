@@ -4,13 +4,10 @@ import ILeaderBoard from '../interfaces/ILeaderBoard';
 class Calculators {
   constructor(private _board: ILeaderBoard[], private _finishedMatches: IMatch[]) {}
 
-  public static calcBoard(team: ILeaderBoard) {
+  private static calcBoard(team: ILeaderBoard) {
     const pts = (3 * team.totalVictories) + (1 * team.totalDraws);
-    const effString = ((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
-    const eff = parseFloat(effString);
-    const goalsDiff = team.goalsFavor - team.goalsOwn;
 
-    return { pts, eff, goalsDiff };
+    return pts;
   }
 
   public calculateHomeResults() {
@@ -22,14 +19,15 @@ class Calculators {
       } else if (data.homeTeamGoals === data.awayTeamGoals) {
         homeTeam.totalDraws += 1;
       } else { homeTeam.totalVictories += 1; }
-      const { pts, eff, goalsDiff } = Calculators.calcBoard(homeTeam);
+      const pts = Calculators.calcBoard(homeTeam);
 
       homeTeam.totalPoints = pts;
       homeTeam.totalGames += 1;
       homeTeam.goalsFavor += data.homeTeamGoals;
       homeTeam.goalsOwn += data.awayTeamGoals;
-      homeTeam.goalsBalance = goalsDiff;
-      homeTeam.efficiency = eff;
+      const parseEfficiency = ((homeTeam.totalPoints / (homeTeam.totalGames * 3)) * 100).toFixed(2);
+      homeTeam.goalsBalance = homeTeam.goalsFavor - homeTeam.goalsOwn;
+      homeTeam.efficiency = parseFloat(parseEfficiency);
     });
     return this._board;
   }
