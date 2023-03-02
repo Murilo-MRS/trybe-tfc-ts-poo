@@ -30,7 +30,7 @@ class LeaderBoardService implements ILeaderBoardService {
     ));
   }
 
-  public async getHomeResults(): Promise<IResponseMessage<ILeaderBoard[]> > {
+  public async getResults(path: string): Promise<IResponseMessage<ILeaderBoard[]> > {
     const finishedMatches: IMatch[] = await this._matchModel.findAll({ include: [
       { model: Team, as: 'homeTeam', attributes: ['teamName'] },
       { model: Team, as: 'awayTeam', attributes: ['teamName'] },
@@ -38,9 +38,11 @@ class LeaderBoardService implements ILeaderBoardService {
     where: { [Op.and]: [{ inProgress: false }] } });
 
     const board = await this.board();
+    const result = path.includes('home')
+      ? new Calculators(board, finishedMatches).calculateHomeResults()
+      : new Calculators(board, finishedMatches).calculateAwayResults();
 
-    const calculate = new Calculators(board, finishedMatches);
-    const result = calculate.calculateHomeResults();
+    // const result = calculate.calculateHomeResults();
     const orderedBoard = result.sort(
       (a, b) => b.totalPoints - a.totalPoints
       || b.goalsBalance - a.goalsBalance

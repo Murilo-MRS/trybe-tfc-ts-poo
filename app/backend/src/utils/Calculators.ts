@@ -31,6 +31,28 @@ class Calculators {
     });
     return this._board;
   }
+
+  public calculateAwayResults() {
+    this._finishedMatches.forEach((data) => {
+      const awayTeam = this._board
+        .find((e) => data.awayTeam?.teamName === e.name) as ILeaderBoard;
+      if (data.awayTeamGoals < data.homeTeamGoals) {
+        awayTeam.totalLosses += 1;
+      } else if (data.awayTeamGoals === data.homeTeamGoals) {
+        awayTeam.totalDraws += 1;
+      } else { awayTeam.totalVictories += 1; }
+      const pts = Calculators.calcBoard(awayTeam);
+
+      awayTeam.totalPoints = pts;
+      awayTeam.totalGames += 1;
+      awayTeam.goalsFavor += data.awayTeamGoals;
+      awayTeam.goalsOwn += data.homeTeamGoals;
+      const parseEfficiency = ((awayTeam.totalPoints / (awayTeam.totalGames * 3)) * 100).toFixed(2);
+      awayTeam.goalsBalance = awayTeam.goalsFavor - awayTeam.goalsOwn;
+      awayTeam.efficiency = parseFloat(parseEfficiency);
+    });
+    return this._board;
+  }
 }
 
 export default Calculators;

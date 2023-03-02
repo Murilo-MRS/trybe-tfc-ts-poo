@@ -8,8 +8,8 @@ class LeaderBoardController {
     this._service = service;
   }
 
-  public async getHomeResults(_req: Request, res: Response) {
-    const { status, message } = await this._service.getHomeResults();
+  public async getResults(req: Request, res: Response) {
+    const { status, message } = await this._service.getResults(req.path);
 
     return res.status(status).json(message);
   }

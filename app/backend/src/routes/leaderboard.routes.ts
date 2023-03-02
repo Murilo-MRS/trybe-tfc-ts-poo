@@ -18,12 +18,12 @@ const leaderBoardController = new LeaderBoardController(leaderBoardService);
 
 routes.get(
   '/home',
-  (req: Request, res: Response) => leaderBoardController.getHomeResults(req, res),
+  (req: Request, res: Response) => leaderBoardController.getResults(req, res),
 );
 
-// routes.get(
-//   '/away',
-//   (req: Request, res: Response) => leaderBoardController.getAwayResults(req, res),
-// );
+routes.get(
+  '/away',
+  (req: Request, res: Response) => leaderBoardController.getResults(req, res),
+);
 
 export default routes;
