@@ -55,23 +55,25 @@ class Calculators {
   }
 
   public calculateResults() {
+    const awayData = this.calculateAwayResults();
     const homeData = this.calculateHomeResults();
-    const awayData = this.calculateHomeResults();
 
     const board = homeData.map((data) => {
       const team = awayData
         .find((e) => data.name === e.name) as ILeaderBoard;
+      // console.log(team);
 
-      team.totalPoints += data.totalPoints;
-      team.totalGames += data.totalGames;
-      team.goalsFavor += data.goalsFavor;
-      team.goalsOwn += data.goalsOwn;
+      // team.totalPoints += data.totalPoints;
+      // team.totalGames += data.totalGames;
+      // team.goalsFavor += data.goalsFavor;
+      // team.goalsOwn += data.goalsOwn;
       const parseEfficiency = ((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
-      team.goalsBalance += data.goalsBalance;
+      // team.goalsBalance += data.goalsBalance;
       team.efficiency = parseFloat(parseEfficiency);
 
       return team;
     });
+
     return board;
   }
 }
