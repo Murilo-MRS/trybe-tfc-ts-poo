@@ -7,13 +7,14 @@ class TeamService implements ITeamService {
   private model: ModelStatic<Team> = Team;
 
   public async findAll(): Promise<ITeam[]> {
-    const teams = await this.model.findAll();
+    const teamsDatavalues = await this.model.findAll();
+    const teams = teamsDatavalues.map(({ dataValues }) => dataValues);
     return teams;
   }
 
   public async findById(id: number): Promise<ITeam | null> {
     const team = await this.model.findByPk(id);
-    return team;
+    return team?.dataValues || null;
   }
 }
 
