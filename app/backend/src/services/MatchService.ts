@@ -6,7 +6,6 @@ import IMatch from '../interfaces/IMatch';
 import IResponseMessage from '../interfaces/IResponseMessage';
 import Team from '../database/models/TeamModel';
 import IBodyMatchGoals from '../interfaces/IBodyMatchGoals';
-// import Team from '../database/models/TeamModel';
 
 class MatchService implements IMatchService {
   private model: ModelStatic<Match> = Match;
@@ -17,7 +16,10 @@ class MatchService implements IMatchService {
       const matches = await this.model.findAll({ include: [
         { model: Team, as: 'homeTeam', attributes: ['teamName'] },
         { model: Team, as: 'awayTeam', attributes: ['teamName'] },
-      ] });
+      ],
+      });
+      // const format = matches.map((el) => el.get({ plain: true }));
+
       return { status: 200, message: matches };
     }
 
@@ -27,7 +29,8 @@ class MatchService implements IMatchService {
       { model: Team, as: 'homeTeam', attributes: ['teamName'] },
       { model: Team, as: 'awayTeam', attributes: ['teamName'] },
     ],
-    where: { [Op.and]: [{ inProgress }] } });
+    where: { [Op.and]: [{ inProgress }] },
+    });
 
     return { status: 200, message: matches };
   }
