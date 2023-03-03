@@ -9,11 +9,44 @@ import { ITeam } from '../interfaces/ITeam';
 import IResponseMessage from '../interfaces/IResponseMessage';
 
 class LeaderBoardService implements ILeaderBoardService {
-  private _teamModel: ModelStatic<Team> = Team;
+  private static teamModel: ModelStatic<Team> = Team;
   private _matchModel: ModelStatic<Match> = Match;
 
-  private async board(): Promise<ILeaderBoard[]> {
-    const teams: ITeam[] = await this._teamModel.findAll();
+  public async getResults(path: string): Promise<IResponseMessage<ILeaderBoard[]> > {
+    const finishedMatches: IMatch[] = await this._matchModel.findAll({ include: [
+      { model: Team, as: 'homeTeam', attributes: ['teamName'] },
+      { model: Team, as: 'awayTeam', attributes: ['teamName'] },
+    ],
+    where: { [Op.and]: [{ inProgress: false }] } });
+
+    const board = await LeaderBoardService.board();
+    const calculate = new Calculators(board, finishedMatches);
+    const result = path.includes('home')
+      ? calculate.calculateHomeResults()
+      : calculate.calculateAwayResults();
+
+    const orderedBoard = LeaderBoardService.orderBoard(result);
+
+    return { status: 200, message: orderedBoard };
+  }
+
+  public async leaderboard(): Promise<IResponseMessage<ILeaderBoard[]> > {
+    const finishedMatches: IMatch[] = await this._matchModel.findAll({ include: [
+      { model: Team, as: 'homeTeam', attributes: ['teamName'] },
+      { model: Team, as: 'awayTeam', attributes: ['teamName'] },
+    ],
+    where: { [Op.and]: [{ inProgress: false }] } });
+
+    const board = await LeaderBoardService.board();
+    const calculate = new Calculators(board, finishedMatches);
+    const result = calculate.calculateResults();
+    const orderedBoard = LeaderBoardService.orderBoard(result);
+
+    return { status: 200, message: orderedBoard };
+  }
+
+  private static async board(): Promise<ILeaderBoard[]> {
+    const teams: ITeam[] = await LeaderBoardService.teamModel.findAll();
     return teams.map(({ teamName }) => (
       {
         name: teamName,
@@ -30,28 +63,14 @@ class LeaderBoardService implements ILeaderBoardService {
     ));
   }
 
-  public async getResults(path: string): Promise<IResponseMessage<ILeaderBoard[]> > {
-    const finishedMatches: IMatch[] = await this._matchModel.findAll({ include: [
-      { model: Team, as: 'homeTeam', attributes: ['teamName'] },
-      { model: Team, as: 'awayTeam', attributes: ['teamName'] },
-    ],
-    where: { [Op.and]: [{ inProgress: false }] } });
-
-    const board = await this.board();
-    const calculate = new Calculators(board, finishedMatches);
-    const result = path.includes('home')
-      ? calculate.calculateHomeResults()
-      : calculate.calculateAwayResults();
-
-    // const result = calculate.calculateHomeResults();
-    const orderedBoard = result.sort(
+  private static orderBoard(leaderBoard: ILeaderBoard[]) {
+    const orderedBoard = leaderBoard.sort(
       (a, b) => b.totalPoints - a.totalPoints
       || b.goalsBalance - a.goalsBalance
       || b.goalsFavor - a.goalsFavor
       || a.goalsOwn - b.goalsOwn,
     );
-
-    return { status: 200, message: orderedBoard };
+    return orderedBoard;
   }
 }
 

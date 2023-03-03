@@ -53,6 +53,27 @@ class Calculators {
     });
     return this._board;
   }
+
+  public calculateResults() {
+    const homeData = this.calculateHomeResults();
+    const awayData = this.calculateHomeResults();
+
+    const board = homeData.map((data) => {
+      const team = awayData
+        .find((e) => data.name === e.name) as ILeaderBoard;
+
+      team.totalPoints += data.totalPoints;
+      team.totalGames += data.totalGames;
+      team.goalsFavor += data.goalsFavor;
+      team.goalsOwn += data.goalsOwn;
+      const parseEfficiency = ((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
+      team.goalsBalance += data.goalsBalance;
+      team.efficiency = parseFloat(parseEfficiency);
+
+      return team;
+    });
+    return board;
+  }
 }
 
 export default Calculators;

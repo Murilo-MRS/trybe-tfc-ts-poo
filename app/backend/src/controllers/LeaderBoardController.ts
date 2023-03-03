@@ -14,7 +14,12 @@ class LeaderBoardController {
     return res.status(status).json(message);
   }
 
-// getLeaderboard
+  public async getLeaderboard(_req: Request, res: Response) {
+    const { status, message } = await this._service.leaderboard();
+
+    return res.status(status).json(message);
+  }
+
 // getAwayResults
 }
 
