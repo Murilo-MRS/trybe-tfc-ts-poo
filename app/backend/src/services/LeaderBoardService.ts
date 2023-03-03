@@ -38,9 +38,10 @@ class LeaderBoardService implements ILeaderBoardService {
     where: { [Op.and]: [{ inProgress: false }] } });
 
     const board = await this.board();
+    const calculate = new Calculators(board, finishedMatches);
     const result = path.includes('home')
-      ? new Calculators(board, finishedMatches).calculateHomeResults()
-      : new Calculators(board, finishedMatches).calculateAwayResults();
+      ? calculate.calculateHomeResults()
+      : calculate.calculateAwayResults();
 
     // const result = calculate.calculateHomeResults();
     const orderedBoard = result.sort(
