@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
 import IPayload from '../../interfaces/IPayload';
 
-const secret = process.env.JWT_SECRET || 'jwt_secret';
+const secret = process.env.JWT_SECRET as string;
 
 function generateToken(payload: IPayload) {
   return sign(payload, secret, {

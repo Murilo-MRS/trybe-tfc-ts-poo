@@ -16,15 +16,16 @@ class UserService implements IUserService {
   public async login(userBody: IUser): Promise<IResponseToken> {
     const user = await this.model.findOne({
       where: { email: userBody.email },
+      raw: true,
     });
+
     if (!user) throw new AppError(401, 'Invalid email or password');
 
     const validatePassword = bcrypt.compareSync(userBody.password, user.password);
     if (!validatePassword) throw new AppError(401, 'Invalid email or password');
 
-    const { dataValues } = user;
     const token = generateToken({
-      username: dataValues.username, role: dataValues.role, email: dataValues.email,
+      username: user.username, role: user.role, email: user.email,
     });
 
     return { status: 200, token };

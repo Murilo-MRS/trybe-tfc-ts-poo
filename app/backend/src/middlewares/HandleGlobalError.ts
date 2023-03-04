@@ -8,8 +8,8 @@ class HandleGlobalError {
     response: Response,
     _next: NextFunction,
   ) {
-    const status = error.status || 500;
-    const message = error.message || 'Something went wrong';
+    const status = error.status as number;
+    const message = error.message as string;
 
     if (error instanceof AppError) {
       return response
@@ -18,6 +18,7 @@ class HandleGlobalError {
           message,
         });
     }
+    return response.status(500).json({ message: 'Internal error' });
   }
 }
 
