@@ -4,7 +4,7 @@ import authenticateToken from '../utils/jwt/authenticateToken';
 import IResponseToken from '../interfaces/IResponseToken';
 import IUserService from '../interfaces/IUserService';
 import generateToken from '../utils/jwt/generateToken';
-import User from '../database/models/UserModel';
+import User from '../../database/models/UserModel';
 import IUser from '../interfaces/IUser';
 import AppError from '../errors/AppError';
 import IPayload from '../interfaces/IPayload';

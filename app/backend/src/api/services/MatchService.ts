@@ -1,10 +1,10 @@
 import { ModelStatic, Op } from 'sequelize';
 import AppError from '../errors/AppError';
 import IMatchService from '../interfaces/IMatchService';
-import Match from '../database/models/MatchModel';
+import Match from '../../database/models/MatchModel';
 import IMatch from '../interfaces/IMatch';
 import IResponseMessage from '../interfaces/IResponseMessage';
-import Team from '../database/models/TeamModel';
+import Team from '../../database/models/TeamModel';
 import IBodyMatchGoals from '../interfaces/IBodyMatchGoals';
 
 class MatchService implements IMatchService {

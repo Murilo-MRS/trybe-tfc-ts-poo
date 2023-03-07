@@ -1,7 +1,7 @@
 import { ModelStatic, Op } from 'sequelize';
 import Calculators from '../utils/Calculators';
-import Match from '../database/models/MatchModel';
-import Team from '../database/models/TeamModel';
+import Match from '../../database/models/MatchModel';
+import Team from '../../database/models/TeamModel';
 import ILeaderBoardService from '../interfaces/ILeaderBoardService';
 import ILeaderBoard from '../interfaces/ILeaderBoard';
 import IMatch from '../interfaces/IMatch';

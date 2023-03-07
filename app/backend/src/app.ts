@@ -1,7 +1,7 @@
 import * as express from 'express';
 import 'express-async-errors';
-import HandleGlobalError from './middlewares/HandleGlobalError';
-import routes from './routes/index.routes';
+import HandleGlobalError from './api/middlewares/HandleGlobalError';
+import routes from './api/routes/index.routes';
 
 class App {
   public app: express.Express;
